@@ -1,0 +1,15 @@
+*.aux
+*.log
+*.swp
+*.lof
+*.lot
+*.out
+*.toc
+*.blg
+*.xdv
+*.bbl
+*.pdf
+*.synctex.gz
+*.hd
+_minted-main
+.DS_Store

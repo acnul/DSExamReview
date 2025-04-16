@@ -1,0 +1,310 @@
+\documentclass[a4paper]{ltxdoc}
+
+\usepackage[UTF8, heading=true, scheme=plain, linespread=1.2, zihao=-4]{ctex}
+
+% counterwith重定义问题
+\let\counterwithout\relax
+\let\counterwithin\relax
+
+\usepackage{zh_CN-Adobefonts_external} % Simplified Chinese Support using external fonts (./fonts/zh_CN-Adobe/)
+%\usepackage{zh_CN-Adobefonts_internal} % Simplified Chinese Support using system fonts
+
+
+%\usepackage[hidelinks]{hyperref}
+\usepackage{geometry, parskip, seqsplit, fancyhdr, etoolbox, tocloft}
+\usepackage{flafter, chngcntr, caption, multirow, graphicx}
+\usepackage{textcomp}
+\usepackage{minted}
+\usepackage[bottom]{footmisc} % 脚注放到页面最底部
+\usepackage{hyperref} % 超链接
+\usepackage{listings}
+\usepackage{tabularx} % 支持自动调整列宽的宏包
+\usepackage{array}    % 增强表格功能
+\usepackage{framed}
+\usepackage{tikz} % 绘制流程图
+\usetikzlibrary{arrows.meta, positioning, decorations.pathreplacing, calc} % 箭头和定位库
+
+
+\counterwithin{figure}{section} % 图的编号按section编排
+\counterwithin{table}{section} % 表的编号按section编排
+\DeclareCaptionFormat{smallformat}{\songti \small #1#2#3} % 宋体，五号
+
+\input{macro.tex}
+
+\captionsetup{
+	labelsep=quad, % caption去掉分隔符:
+	textformat=simple,
+	format=smallformat,
+}
+
+\lstset{
+    language=C++,
+    numbers=left, % 显示行号
+    numberstyle=\footnotesize, % 行号字体
+    %backgroundcolor=\color{lightgray},
+    basicstyle=\footnotesize\ttfamily,
+    keywordstyle=\color{blue!70}, % 关键字颜色
+    commentstyle=\color{red!50!green!50!blue!50}, % 注释颜色
+    stringstyle=\color{violet},
+    frame=shadowbox, % 为代码块添加阴影框
+    rulesepcolor=\color{red!20!green!20!blue!20}, % 阴影框颜色
+    escapeinside=``, % 允许在代码块中使用 LaTeX 命令
+    xleftmargin=2em, xrightmargin=2em, aboveskip=1em, % 设置代码块的边距
+    framexleftmargin=2em, % 阴影框左边距
+    showspaces=false,                      % 不显示空格符
+    showstringspaces=false,                % 不显示字符串中的空格符
+    showtabs=false
+}
+
+\ctexset{
+	space=auto,
+	section = {
+		format = \centering \heiti \sanhao \bfseries,
+		aftername = \hspace{0.5em},
+		afterindent = true,
+	},
+	subsection = {
+		format = \heiti \bfseries,
+		aftername = \hspace{0.4em},
+		afterindent = true,
+	},
+	subsubsection = {
+		format = \songti \bfseries,
+		aftername = \hspace{0.4em},
+		afterindent = true,
+	},
+}
+
+\renewcommand{\normalsize}{\fontsize{10.5pt}{14.4}\selectfont}
+
+\geometry{left=3cm, right=3cm, top=2.54cm, bottom=2.54cm}
+
+%\setmainfont{Times New Roman} % 英文字体
+
+
+\begin{document}
+% \include{tex/cover}
+
+% 目录
+\hypersetup{linktoc=none,hidelinks}
+{
+\tocloftpagestyle{empty}
+\setlength{\cftfignumwidth}{3.5em}
+\setlength{\cfttabnumwidth}{3.5em}
+\clearpage
+% \tableofcontents
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\pagenumbering{gobble}
+
+\pagenumbering{arabic}
+}
+
+% 设置页眉
+\newgeometry{left=2.1cm, right=2.1cm, top=2cm, bottom=2cm}
+\fancyhead{}
+\chead{\small 数据结构复习备考大纲\vspace{0.3cm}}
+\pagestyle{fancy}
+
+% 正文 
+
+\setcounter{page}{1}
+% 重写section指令以便设置section段前1行间距，分页
+% \pretocmd{\section}{\clearpage \vspace*{-2.0em}}{}{}
+
+\setlength{\FrameRule}{0.5pt} % 设置边框线的宽度
+\setlength{\FrameSep}{10pt} % 设置边框线与内容之间的间距
+\setlength{\leftmargin}{0pt} % 将左边框与左边距对齐
+
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.1em}
+\setlength{\baselineskip}{15pt}
+
+\author{
+    \vspace*{-0.5em}
+    \normalsize 李昊 \\
+    \small 智能科学与技术24-2 \ \ \ 2024218482 \\
+}
+\title{\vspace*{-2em} \heiti 数据结构复习备考大纲\vspace*{-0.4em}}
+\date{\vspace*{-1em}}
+\maketitle
+\section{说明}
+\par 数据结构课程学分为4.5，课程设计学分为1，从纯应试角度来讲，这门课相当重要。为了备考数据结构，我们可以从往年的真题来找出出题规律（数据结构由几位宣区常驻教师授课，几年内几乎都是同一班老师出卷，真题参考价值较大），通过往年真题，我们可以得出以下出题规律：
+\begin{itemize}
+    \item 内容参考以上课PPT为主，或者是严蔚敏《数据结构》（与408考研接轨，国内数据结构教学大多都是这一套）。
+    \item 整个考试呈现出\textbf{注重基础知识}和\textbf{广度}(即只要是上课讲过的知识点，哪怕是非常细微的知识点，都可能会考)的特点。但在基础扎实的情况下，\textbf{通常不会出太难的题目}。
+    \item 对基础概念的考察占有很大分值，选择题、填空题大多是对基础概念的考察。
+    \item 大题注重算法思想的描述和算法的实现。
+\end{itemize}
+\par 接下来，我们的备考准备针对以上特点进行。此外，我会根据《工大小题》的数据结构历年真题（20-24年期末真题+23年期中真题），在每个知识点后面附上对应的真题题号，便于了解出题规律和重点。由于卷子数量不足，没有标注的考点不代表不重要或者不考，对于每个知识点都应该给予同等的重视。
+\section{概论}
+\subsection{基本概念}
+\par \textbf{算法}: 算法是由若干条指令组成的有穷序列。
+\begin{framed}
+    \textbf{22-23年期中选择题第1题}
+    \par 算法指的是(\ \ )
+    \par A. 计算机程序
+    \par B. 解决问题的计算方法
+    \par C. 排序算法
+    \par D. 解决问题的有限运算序列
+    \par \textbf{答案：}D
+\end{framed}
+\par \textbf{数据}：能够输入到计算机中，并能被计算机处理的符号的集合。
+\par \textbf{数据元素}：构成数据的基本单位（具有完整的独立意义）。
+\par \textbf{数据项}：数据不可分割的最小单位。
+\par \textbf{数据结构}: 构成数据的数据元素之间的结构关系（数据元素及其关系的集合）。
+\par 每种数据结构都包含三个方面的内容：\textbf{逻辑结构}、\textbf{存储结构（物理结构）}、\textbf{运算}
+\subsection{数据结构的三个要素（逻辑结构、储存结构、运算）}
+\par \textbf{逻辑结构}：表示数据元素之间的逻辑关系。数据结构按数据元素之间的内在逻辑关系分类：
+\begin{itemize}
+    \item 集合：元素之间没有关系
+    \item 线性结构：元素之间具有次序关系
+    \item 树形结构（树型结构）：元素之间的关系类似于现实中的树，具有层次关系。
+    \item 图结构（网状结构）：元素间的关系较复杂
+\end{itemize}
+\begin{framed}
+    \textbf{22-23年期中选择题第2题}
+    \par 从逻辑上可以把数据结构分为(\ \ )两大类
+    \par A. 动态结构、静态结构
+    \par B. 顺序结构、链式结构
+    \par C. 线性结构、非线性结构
+    \par D. 初等结构、构造型结构
+    \par \textbf{答案：}C
+    \par 四个选项中，只有C中的线性结构是逻辑结构，B中的顺序结构、链式结构是存储结构，A中的动态结构、静态结构是存储结构，D中的初等结构、构造型结构是数据元素的分类。
+\end{framed}
+\begin{framed}
+    \textbf{22-23年期中填空题第1题}
+    \par 对于给定的n个元素，可以构造出的逻辑结构由集合、线性结构、\_\_\_\_\_\_、图四种。
+    \par \textbf{答案：} 树
+\end{framed}
+\par \textbf{存储结构}：数据结构在内存中的实现形式。按存储形式分类：
+\begin{itemize}
+    \item 顺序存储结构：所有元素存放在一片连续的存储单元中，逻辑上相邻的元素在计算机内存中仍然相邻。
+    \item 链式存储结构：所有元素存放在可以不连续的存储单元中，但元素之间的关系可以通过地址确定，逻辑上相邻的元素在计算机内存中不一定相邻。即：每个元素附加相邻元素的地址信息，通过此地址找到相邻元素。
+    \item 索引存储结构：在存储数据的同时，为每个数据元素建立一个附加的索引表，通过索引表可以快速找到数据元素的位置。
+    \item 散列存储结构：通过散列函数将数据元素的存储地址直接计算出来，适用于查找操作频繁的场景。
+\end{itemize}
+\par 从这个分类方法来看，线性表是通过其逻辑结构命名的(线性结构)，而顺序表、链表、哈希表等则是线性表在统一逻辑结构(线性结构)、不同存储结构(顺序存储、链式存储、散列存储)下的具体实现。
+\begin{framed}
+    \textbf{19-20年期末选择题第1题}
+    \par 不要求逻辑上相邻的结点在物理位置上也相邻、结点间的逻辑关系由指针表示，这种储存方法是(\ \ )
+    \par A. 顺序存储方法
+    \par B. 链式存储方法
+    \par C. 索引存储方法
+    \par D. 散列存储方法
+    \par \textbf{答案：} B
+\end{framed}
+\par \textbf{运算}：作用在此数据结构上的运算（操作）。运算是指所施加的一组操作总称，\textbf{运算的定义依赖于逻辑结构，但运算的实现必依赖于存储结构。}
+\subsection{算法(algorithm)}
+\par \textbf{算法}：通俗地讲，算法就是特定问题的求解的方法。
+\par 更严格定义，算法是由若干条指令组成的有穷序列，必须满足（也称为算法的五大特性）：
+\begin{itemize}
+    \item 输入：0或n个输入（算法开始前的初始量）
+    \item 输出：1或n个输出，它们是算法执行完后的结果。
+    \item 有穷性：指令的执行次数必须是有限的。
+    \item 确定性：指令的描述是确定的， 无二义性的。使得对相同的输入能产生相同的输出结果。
+    \item 可行性：每条指令的执行时间都是有限的。算法中每条指令可用计算机指令的有限次执行来实现。
+\end{itemize}
+\begin{framed}
+    \textbf{23-24年期末填空题第1题}
+    \par 算法有5个特性，分别是输入、\_\_\_\_\_\_、\_\_\_\_\_\_、\_\_\_\_\_\_、\_\_\_\_\_\_。
+    \par \textbf{答案：} 输出、有穷性、确定性、可行性
+\end{framed}
+\par 有多种手段进行算法描述：
+\begin{itemize}
+    \item 自然语言描述：用我们日常生活中的自然语言（可以是中文形式，也可以是英形式）也可以描述算法。特点：灵活、易用，但不严谨（一句话多种理解）。 
+    \item 数学语言描述：数学语言或约定的符号语言来描述算法。
+    \item 流程图描述：用图形符号描述算法，输入、输出、判断、处理分别用不同的框图表示，用箭头表示流程的流向。特点：直观、易理解。
+    \item 计算机语言描述：用一种计算机语言来表达算法，事实就是编写程序。特点：准确、严格，但死板。
+    \item 伪语言（类语言）描述：以一种计算机语言为基础，加上少量自然语言、数学语言等的描述方式。类C、类C++、类Pascal、类Java、类C\#等，特点：计算机语言和自然语言的折中，这样写出来的东西叫伪代码，不能直接到计算机上运行，本课程采用C和C++结合的伪语言描述方法。
+\end{itemize}
+
+\subsubsection{算法的时间复杂度}
+\par \textbf{时间复杂度}：算法的时间复杂度是指算法执行所需要的时间与问题规模之间的关系。通常用大O表示法来表示。
+\par 这一部分相对较简单，没有太多考点，直接跳过。
+\begin{framed}
+    相关题目几乎每年必考，但是考察的内容与特定的算法相关，难度不在于时间复杂度分析本身，这里不再列举。
+\end{framed}
+
+\section{线性表}
+\subsection{线性表的基本定义}
+\par 线性表$L$是由$n$个元素$a_1,a_2,\cdots,a_n$组成的\textbf{有限序列},记作$L=(a_1,a_2,\cdots,a_n)$,其中$n\geq 0$为表长度,$n=0$时$L$为空表，记作$L=()$
+\par $L=(a_1,a_2,\cdots,a_{i-1},a_i,a_{i+1},\cdots,a_n)$中：$a_{i-1}$叫做$a_i$的\textbf{直接前驱}；$a_{i+1}$叫做$a_i$的直接后继。
+\par 非空线性表的\textbf{特点}：
+\begin{itemize}
+    \item 存在一个“第一个（头、首）”数据元素；
+    \item 存在一个“最后一个（尾）”数据元素；
+    \item 除首元素外其他元素有且仅有一个直接前趋；
+    \item 除尾元素外其他元素有且仅有一个直接后继。
+\end{itemize}
+\par 对线性表有如下\textbf{基本运算}：                          
+\begin{itemize}
+    \item \textbf{1}.初始化：initialList(L) 创建一个空的线性表。
+    \item \textbf{2}.求表长度：listLength(L) 返回线性表中的元素个数。
+    \item \textbf{3}.按序号取元素：getElement( L, i ) 从线性表中取出序号为 i 的数据元素。前提：1<=i<=n, 即存在该元素。
+    \item \textbf{4}.按值查找元素：listLocate(L , x) 在线性表中查找给定值的元素 x 所在的位置。
+    \item \textbf{5}.插入元素：listInsert(L, i, x) 在线性表中给定的位置 i  处，插入给定值的元素 x。前提：1<=i<=n+1，即插入位置有效。
+    \item \textbf{6}.删除元素：listDelete(L,i) 删除线性表种指定序号 i 处的元素。前提：1<=i<=n, 即存在该元素。
+\end{itemize}
+\subsection{线性表的顺序存储结构——顺序表}
+\par \textbf{顺序表}：将线性表中的元素依次存储到数组中。
+\begin{tikzpicture}[
+    array cell/.style={draw, minimum width=1cm, minimum height=1cm, anchor=center},
+    info box/.style={draw, rounded corners, minimum width=2cm, minimum height=1cm},
+    arrow/.style={->, >=latex, thick},
+    node distance=0.5cm
+]
+
+% 定义数组 data[]
+\node[array cell] (cell0) at (0,0) {$a_1$};
+\node[array cell] (cell1) at (1,0) {$a_2$};
+\node[array cell] (cell2) at (2,0) {$a_3$};
+\node[array cell] (cell3) at (3,0) {$\cdots$};
+\node[array cell] (cell4) at (4,0) {$a_n$};
+\node[array cell, dashed] (cell5) at (5,0) {};
+\node[array cell, dashed] (cell6) at (6,0) {};
+
+% 数组索引
+\node[below=0.1cm of cell0] {\small 0};
+\node[below=0.1cm of cell1] {\small 1};
+\node[below=0.1cm of cell2] {\small 2};
+\node[below=0.1cm of cell4] {\small $n-1$};
+\node[below=0.1cm of cell5] {\small $n$};
+\node[below=0.1cm of cell6] {\small $n+1$};
+
+% 数组名称和长度变量
+\node[above left=0.2cm and -0.5cm of cell0] {data[ ]};
+\node[info box] (len) at (3,-3) {len = $n$};
+
+% 顺序表记号
+\node[align=center] (notation) at (3,2) {$L = (a_1, a_2, \ldots, a_n)$};
+
+% 添加箭头和注释
+\draw[arrow] (len) -- ($(cell4.south)+(0,-0.2)$);
+\draw[arrow, dashed] (notation) -- ($(cell0.north)+(0,0.2)$);
+\draw[arrow, dashed] (notation) -- ($(cell4.north)+(0,0.2)$);
+
+% 添加边界说明
+\draw[decorate,decoration={brace,amplitude=5pt,mirror}] 
+    ($(cell0.south west)+(-0.1,-0.5)$) -- ($(cell4.south east)+(0.1,-0.5)$) 
+    node[midway,below=0.3cm] {有效元素区间};
+\draw[decorate,decoration={brace,amplitude=5pt,mirror}] 
+    ($(cell5.south west)+(-0.1,-0.5)$) -- ($(cell6.south east)+(0.1,-0.5)$) 
+    node[midway,below=0.3cm] {预留空间};
+
+\end{tikzpicture}
+\par 顺序表的代码定义如下:
+\begin{lstlisting}
+#define MaxLen 100              //最多100个元素
+typedef int elementType;        //定义elementType为整型
+struct sList{
+    elementType data[MaxLen];   //定义存放元素的数组
+    int listLen;                // 定义长度分量
+};
+
+typedef struct sList seqList;   //定义seqList类型
+\end{lstlisting}
+
+
+
+
+\end{document}
